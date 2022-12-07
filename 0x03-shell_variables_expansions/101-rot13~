@@ -1,0 +1,2 @@
+#!/bin/bash
+txr 'A-Za-z' 'N-ZA-Mn-za-m'
