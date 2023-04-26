@@ -12,5 +12,5 @@ do
         echo "Hi"
     fi
     echo "Best School"
-    i=$(( count++ ))
+    (( count++ ))
 done
