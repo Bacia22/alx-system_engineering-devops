@@ -4,7 +4,7 @@
 
 function no_ctrlc()
 {
-echo :I am invincible!!!"
+echo "I am invincible!!!"
 }
 
 
