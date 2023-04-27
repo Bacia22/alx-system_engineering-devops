@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# Displaying information about the file "school"
+# Displaying information about the file "school".
 
 if [ -e "$school" ]
 then
-
     echo "school file exists"
     if [ -s "$school" ]
     then
