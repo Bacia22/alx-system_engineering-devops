@@ -1,37 +1,39 @@
 #!/usr/bin/python3
+
 """
-Task 3 - extend your Python script to export data in the JSON format.
+Python script that exports data in the JSON format.
 """
 
-if __name__ == '__main__':
-    import requests
-    import json
-    from sys import argv
+from requests import get
+import json
 
-    ids = set()
-    rq = requests.get('https://jsonplaceholder.typicode.com/posts')
-    rqdata = rq.json()
-    for user in rqdata:
-        ids.add(user.get('userId'))
+if __name__ == "__main__":
+    response = get('https://jsonplaceholder.typicode.com/todos/')
+    data = response.json()
 
-    export = {}
-    for user in ids:
-        rq = requests.get('https://jsonplaceholder.typicode.com/users/{}'.
-                          format(user))
-        rqname = rq.json().get('username')
+    row = []
+    response2 = get('https://jsonplaceholder.typicode.com/users')
+    data2 = response2.json()
 
-        rq = requests.get('https://jsonplaceholder.typicode.com/' +
-                          'todos?userId={}'.format(user))
-        rqdata = rq.json()
+    new_dict1 = {}
 
-        export['{}'.format(user)] = []
-        for task in rqdata:
-            export['{}'.format(user)].append({
-                'task': task.get('title'),
-                'completed': task.get('completed'),
-                'username': rqname
-            })
+    for j in data2:
 
-    with open('todo_all_employees.json', 'w') as outfile:
-        json.dump({int(x): export[x] for x in export.keys()},
-                  outfile, sort_keys=True)
+        row = []
+        for i in data:
+
+            new_dict2 = {}
+
+            if j['id'] == i['userId']:
+
+                new_dict2['username'] = j['username']
+                new_dict2['task'] = i['title']
+                new_dict2['completed'] = i['completed']
+                row.append(new_dict2)
+
+        new_dict1[j['id']] = row
+
+    with open("todo_all_employees.json",  "w") as f:
+
+        json_obj = json.dumps(new_dict1)
+        f.write(json_obj)
